@@ -1,0 +1,43 @@
+.navbar {
+  display: flex;
+  gap: 0;
+  background-color: #f5f5f5;
+  border-bottom: 2px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.nav-button {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.nav-button:active {
+  background-color: #ececec;
+}
+
+.nav-button.active {
+  color: #2c5f2d;
+  border-bottom-color: #2c5f2d;
+  background-color: #f0f8f1;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .nav-button {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}

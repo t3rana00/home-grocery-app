@@ -1,0 +1,105 @@
+:root {
+  --primary-color: #2c5f2d;
+  --primary-dark: #1e4620;
+  --primary-light: #f0f8f1;
+  --bg-color: #fafafa;
+  --card-bg: #ffffff;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  --border-color: #e0e0e0;
+  --success-color: #4caf50;
+  --danger-color: #d32f2f;
+  --danger-light: #ffebee;
+  --warning-color: #e65100;
+  --warning-light: #fff3e0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--bg-color);
+}
+
+.app-header {
+  background-color: var(--card-bg);
+  padding: 16px;
+  border-bottom: 2px solid var(--border-color);
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+/* Scrollbar styling */
+.app-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.app-content::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+.app-content::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.app-content::-webkit-scrollbar-thumb:hover {
+  background: #ccc;
+}
+
+/* Tablet and desktop */
+@media (min-width: 768px) {
+  .app-header h1 {
+    font-size: 32px;
+  }
+
+  .app-content {
+    padding-bottom: 40px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .app-header {
+    padding: 12px;
+  }
+
+  .app-header h1 {
+    font-size: 24px;
+  }
+}
