@@ -147,12 +147,13 @@ export function useFirebaseBills(userId: string = 'guest') {
     return () => unsubscribe();
   }, [userId]);
 
-  const addBill = async (name: string, amount: number, dueDate: string) => {
+  const addBill = async (name: string, amount: number, dueDate: string, isRecurring: boolean = false) => {
     const newBill = {
       name,
       amount,
       dueDate,
       isPaid: false,
+      isRecurring,
       createdAt: Date.now(),
     };
     const docRef = await addDoc(collection(db, `users/${userId}/bills`), newBill);
@@ -162,9 +163,15 @@ export function useFirebaseBills(userId: string = 'guest') {
   const toggleBillStatus = async (id: string) => {
     const bill = bills.find((b) => b.id === id);
     if (bill) {
-      await updateDoc(doc(db, `users/${userId}/bills`, id), {
+      const updateData: any = {
         isPaid: !bill.isPaid,
-      });
+      };
+      if (!bill.isPaid) {
+        updateData.paidDate = new Date().toISOString().split('T')[0];
+      } else {
+        updateData.paidDate = null;
+      }
+      await updateDoc(doc(db, `users/${userId}/bills`, id), updateData);
     }
   };
 

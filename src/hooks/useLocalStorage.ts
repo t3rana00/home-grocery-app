@@ -118,13 +118,14 @@ export function useBills() {
     localStorage.setItem(STORAGE_KEYS.bills, JSON.stringify(newBills));
   };
 
-  const addBill = (name: string, amount: number, dueDate: string) => {
+  const addBill = (name: string, amount: number, dueDate: string, isRecurring: boolean = false) => {
     const newBill: Bill = {
       id: Date.now().toString(),
       name,
       amount,
       dueDate,
       isPaid: false,
+      isRecurring,
       createdAt: Date.now(),
     };
     saveBills([...bills, newBill]);
@@ -133,7 +134,11 @@ export function useBills() {
 
   const toggleBillStatus = (id: string) => {
     const updated = bills.map(bill =>
-      bill.id === id ? { ...bill, isPaid: !bill.isPaid } : bill
+      bill.id === id ? { 
+        ...bill, 
+        isPaid: !bill.isPaid,
+        paidDate: !bill.isPaid ? new Date().toISOString().split('T')[0] : undefined
+      } : bill
     );
     saveBills(updated);
   };

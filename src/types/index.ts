@@ -22,6 +22,8 @@ export interface Bill {
   amount: number;
   dueDate: string; // YYYY-MM-DD format
   isPaid: boolean;
+  paidDate?: string; // Date when marked as paid
+  isRecurring: boolean; // Monthly recurring bill
   createdAt: number;
 }
 
