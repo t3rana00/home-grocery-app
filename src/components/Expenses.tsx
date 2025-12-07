@@ -84,25 +84,15 @@ export function Expenses({ expenses, isLoaded, onAddExpense, onDeleteExpense }: 
           />
         </div>
         <div className="form-row">
-          <div className="amount-input-wrapper">
-            <input
-              type="number"
-              placeholder="Amount"
-              step="0.01"
-              value={formData.amount}
-              onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-              className="form-input"
-              required
-            />
-            <button
-              type="button"
-              className="calculator-btn"
-              onClick={() => setShowCalculator(true)}
-              title="Open Calculator"
-            >
-              🧮
-            </button>
-          </div>
+          <input
+            type="number"
+            placeholder="Amount"
+            step="0.01"
+            value={formData.amount}
+            onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+            className="form-input"
+            required
+          />
           <input
             type="text"
             placeholder="Category (optional)"
@@ -182,6 +172,14 @@ export function Expenses({ expenses, isLoaded, onAddExpense, onDeleteExpense }: 
           ))}
         </div>
       )}
+
+      <button
+        className="floating-calculator-btn"
+        onClick={() => setShowCalculator(true)}
+        title="Open Calculator"
+      >
+        🧮
+      </button>
 
       {showCalculator && (
         <Calculator
