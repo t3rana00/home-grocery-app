@@ -10,7 +10,7 @@ import {
   orderBy,
 } from 'firebase/firestore';
 import { db } from './config';
-import type { MissingItem, ShoppingItem, Bill } from '../types';
+import type { MissingItem, ShoppingItem, Bill, Expense } from '../types';
 
 // Hook for Missing Items
 export function useFirebaseMissingItems(userId: string = 'guest') {
@@ -184,4 +184,46 @@ export function useFirebaseBills(userId: string = 'guest') {
   };
 
   return { bills, isLoaded, addBill, toggleBillStatus, deleteBill, getBillsSorted, isOverdue };
+}
+
+// Hook for Expenses
+export function useFirebaseExpenses(userId: string = 'guest') {
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const q = query(
+      collection(db, `users/${userId}/expenses`),
+      orderBy('date', 'desc')
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const expensesData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Expense[];
+      setExpenses(expensesData);
+      setIsLoaded(true);
+    });
+
+    return () => unsubscribe();
+  }, [userId]);
+
+  const addExpense = async (description: string, amount: number, category: string, date: string) => {
+    const newExpense = {
+      description,
+      amount,
+      category: category || null,
+      date,
+      createdAt: Date.now(),
+    };
+    const docRef = await addDoc(collection(db, `users/${userId}/expenses`), newExpense);
+    return { id: docRef.id, ...newExpense } as Expense;
+  };
+
+  const deleteExpense = async (id: string) => {
+    await deleteDoc(doc(db, `users/${userId}/expenses`, id));
+  };
+
+  return { expenses, isLoaded, addExpense, deleteExpense };
 }

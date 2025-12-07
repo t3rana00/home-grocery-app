@@ -25,4 +25,13 @@ export interface Bill {
   createdAt: number;
 }
 
-export type Tab = 'missing' | 'shopping' | 'bills';
+export interface Expense {
+  id: string;
+  description: string;
+  amount: number;
+  category?: string;
+  date: string; // YYYY-MM-DD format
+  createdAt: number;
+}
+
+export type Tab = 'missing' | 'shopping' | 'bills' | 'expenses';

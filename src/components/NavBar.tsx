@@ -27,6 +27,12 @@ export function NavBar({ activeTab, onTabChange }: NavBarProps) {
       >
         Bills to Pay
       </button>
+      <button
+        className={`nav-button ${activeTab === 'expenses' ? 'active' : ''}`}
+        onClick={() => onTabChange('expenses')}
+      >
+        Daily Expenses
+      </button>
     </nav>
   );
 }

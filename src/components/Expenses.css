@@ -1,0 +1,280 @@
+.expenses-container {
+  padding: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.add-form {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #2c5f2d;
+  box-shadow: 0 0 0 3px rgba(44, 95, 45, 0.1);
+}
+
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background-color: #2c5f2d;
+  color: white;
+  width: 100%;
+}
+
+.btn-primary:active {
+  background-color: #1e4620;
+}
+
+.btn-danger {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 8px 10px;
+  font-size: 16px;
+  min-width: 40px;
+}
+
+.btn-danger:active {
+  background-color: #ffcdd2;
+}
+
+.month-selector {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.month-selector label {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.month-select {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  background-color: white;
+  cursor: pointer;
+}
+
+.month-select:focus {
+  outline: none;
+  border-color: #2c5f2d;
+  box-shadow: 0 0 0 3px rgba(44, 95, 45, 0.1);
+}
+
+.month-total {
+  background: linear-gradient(135deg, #2c5f2d 0%, #1e4620 100%);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  color: white;
+}
+
+.month-total h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.total-amount {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.expenses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.expense-card {
+  background: white;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #2c5f2d;
+}
+
+.expense-date {
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+  min-width: 70px;
+  text-align: center;
+  background-color: #f5f5f5;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.expense-content {
+  flex: 1;
+}
+
+.expense-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.expense-description {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+}
+
+.expense-amount {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2c5f2d;
+  white-space: nowrap;
+}
+
+.expense-category {
+  display: inline-block;
+  background-color: #f0f8f1;
+  color: #2c5f2d;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.empty-subtitle {
+  font-size: 14px;
+  color: #999;
+  margin-top: 8px !important;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}
+
+@media (max-width: 600px) {
+  .expenses-container {
+    padding: 12px;
+  }
+
+  .add-form {
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+
+  .form-row {
+    gap: 10px;
+  }
+
+  .month-selector {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px;
+  }
+
+  .month-select {
+    width: 100%;
+  }
+
+  .month-total {
+    padding: 16px;
+  }
+
+  .total-amount {
+    font-size: 28px;
+  }
+
+  .expense-card {
+    padding: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .expense-date {
+    min-width: 60px;
+    font-size: 11px;
+  }
+
+  .expense-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .expense-description {
+    font-size: 14px;
+  }
+
+  .expense-amount {
+    font-size: 15px;
+  }
+
+  .btn-danger {
+    align-self: flex-start;
+  }
+}

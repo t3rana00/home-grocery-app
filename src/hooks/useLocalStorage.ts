@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import type { MissingItem, ShoppingItem, Bill } from '../types';
+import type { MissingItem, ShoppingItem, Bill, Expense } from '../types';
 
 const STORAGE_KEYS = {
   missingItems: 'missingItems',
   shoppingList: 'shoppingList',
   bills: 'bills',
+  expenses: 'expenses',
 };
 
 export function useMissingItems() {
@@ -153,4 +154,39 @@ export function useBills() {
   };
 
   return { bills, isLoaded, addBill, toggleBillStatus, deleteBill, getBillsSorted, isOverdue };
+}
+
+export function useExpenses() {
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEYS.expenses);
+    setExpenses(stored ? JSON.parse(stored) : []);
+    setIsLoaded(true);
+  }, []);
+
+  const saveExpenses = (newExpenses: Expense[]) => {
+    setExpenses(newExpenses);
+    localStorage.setItem(STORAGE_KEYS.expenses, JSON.stringify(newExpenses));
+  };
+
+  const addExpense = (description: string, amount: number, category: string, date: string) => {
+    const newExpense: Expense = {
+      id: Date.now().toString(),
+      description,
+      amount,
+      category,
+      date,
+      createdAt: Date.now(),
+    };
+    saveExpenses([...expenses, newExpense]);
+    return newExpense;
+  };
+
+  const deleteExpense = (id: string) => {
+    saveExpenses(expenses.filter(expense => expense.id !== id));
+  };
+
+  return { expenses, isLoaded, addExpense, deleteExpense };
 }
