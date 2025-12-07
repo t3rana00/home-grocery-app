@@ -4,23 +4,32 @@ import { NavBar } from './components/NavBar';
 import { MissingList } from './components/MissingList';
 import { ShoppingListComponent } from './components/ShoppingList';
 import { Bills } from './components/Bills';
-// Using Firebase for cloud storage with real-time sync
-import {
-  useFirebaseMissingItems as useMissingItems,
-  useFirebaseShoppingList as useShoppingList,
-  useFirebaseBills as useBills,
-} from './firebase/firebaseHooks';
-// Uncomment below to use localStorage instead:
-// import { useMissingItems, useShoppingList, useBills } from './hooks/useLocalStorage';
+
+// Choose your storage method:
+// Option 1: localStorage (offline, browser-only)
+import { useMissingItems, useShoppingList, useBills } from './hooks/useLocalStorage';
+
+// Option 2: Firebase (cloud, real-time sync) - Uncomment these lines after Firebase setup:
+// import {
+//   useFirebaseMissingItems as useMissingItems,
+//   useFirebaseShoppingList as useShoppingList,
+//   useFirebaseBills as useBills,
+// } from './firebase/firebaseHooks';
+
 import './App.css';
 
 function App() {
   const [activeTab, setActiveTab] = useState<Tab>('missing');
 
-  // Using 'guest' user - replace with actual user ID after adding authentication
-  const missingItems = useMissingItems('guest');
-  const shoppingList = useShoppingList('guest');
-  const bills = useBills('guest');
+  // For Firebase: pass userId (e.g., 'guest' or actual user ID after authentication)
+  // const missingItems = useMissingItems('guest');
+  // const shoppingList = useShoppingList('guest');
+  // const bills = useBills('guest');
+
+  // For localStorage: no parameters needed
+  const missingItems = useMissingItems();
+  const shoppingList = useShoppingList();
+  const bills = useBills();
 
   return (
     <div className="app">
