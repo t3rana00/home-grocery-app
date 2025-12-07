@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Expense } from '../types';
+import { Calculator } from './Calculator';
 import './Expenses.css';
 
 interface ExpensesProps {
@@ -17,6 +18,7 @@ export function Expenses({ expenses, isLoaded, onAddExpense, onDeleteExpense }: 
     date: new Date().toISOString().split('T')[0],
   });
   const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7)); // YYYY-MM
+  const [showCalculator, setShowCalculator] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,15 +84,25 @@ export function Expenses({ expenses, isLoaded, onAddExpense, onDeleteExpense }: 
           />
         </div>
         <div className="form-row">
-          <input
-            type="number"
-            placeholder="Amount"
-            step="0.01"
-            value={formData.amount}
-            onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-            className="form-input"
-            required
-          />
+          <div className="amount-input-wrapper">
+            <input
+              type="number"
+              placeholder="Amount"
+              step="0.01"
+              value={formData.amount}
+              onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+              className="form-input"
+              required
+            />
+            <button
+              type="button"
+              className="calculator-btn"
+              onClick={() => setShowCalculator(true)}
+              title="Open Calculator"
+            >
+              🧮
+            </button>
+          </div>
           <input
             type="text"
             placeholder="Category (optional)"
@@ -169,6 +181,15 @@ export function Expenses({ expenses, isLoaded, onAddExpense, onDeleteExpense }: 
             </div>
           ))}
         </div>
+      )}
+
+      {showCalculator && (
+        <Calculator
+          onCalculate={(result) => {
+            setFormData({ ...formData, amount: result.toFixed(2) });
+          }}
+          onClose={() => setShowCalculator(false)}
+        />
       )}
     </div>
   );
