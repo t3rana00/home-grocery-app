@@ -23,6 +23,10 @@
   margin-bottom: 12px;
 }
 
+.add-payer-inline .form-row {
+  grid-template-columns: 2fr 1fr;
+}
+
 .floating-calculator-btn {
   position: fixed;
   right: 20px;
@@ -220,6 +224,90 @@
   font-weight: 500;
 }
 
+.expense-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.expense-payer {
+  font-size: 13px;
+  color: #555;
+  background: #f4f4f5;
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+
+.payer-totals {
+  margin: 24px 0 24px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #f0f8f1 0%, #e8f5ea 100%);
+  border-radius: 12px;
+  border-left: 5px solid #2c5f2d;
+  box-shadow: 0 2px 8px rgba(44, 95, 45, 0.1);
+}
+
+.payer-totals h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e4620;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.payer-totals-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.payer-total-card {
+  background: white;
+  border: 2px solid #2c5f2d;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(44, 95, 45, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.payer-total-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2c5f2d 0%, #48a857 100%);
+}
+
+.payer-total-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(44, 95, 45, 0.25);
+  border-color: #1e4620;
+}
+
+.payer-name {
+  font-weight: 700;
+  color: #1f2937;
+  font-size: 15px;
+  text-transform: capitalize;
+}
+
+.payer-amount {
+  color: #2c5f2d;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
 .empty-state {
   text-align: center;
   padding: 40px 20px;
@@ -258,6 +346,10 @@
 
   .form-row {
     gap: 10px;
+  }
+
+  .add-payer-inline .form-row {
+    grid-template-columns: 1fr;
   }
 
   .month-selector {

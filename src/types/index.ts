@@ -32,7 +32,14 @@ export interface Expense {
   description: string;
   amount: number;
   category?: string;
+  paidBy?: string;
   date: string; // YYYY-MM-DD format
+  createdAt: number;
+}
+
+export interface Payer {
+  id: string;
+  name: string;
   createdAt: number;
 }
 

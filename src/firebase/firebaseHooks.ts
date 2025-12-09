@@ -8,9 +8,42 @@ import {
   onSnapshot,
   query,
   orderBy,
+  getDoc,
 } from 'firebase/firestore';
 import { db } from './config';
 import type { MissingItem, ShoppingItem, Bill, Expense } from '../types';
+import type { Payer } from '../types';
+
+// Hook for User Profile (name)
+export function useUserProfile(userId: string | null) {
+  const [userName, setUserName] = useState<string>('');
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!userId) {
+      setIsLoaded(true);
+      return;
+    }
+
+    const fetchUserProfile = async () => {
+      try {
+        const userRef = doc(db, 'users', userId);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          setUserName(userSnap.data()?.name || '');
+        }
+        setIsLoaded(true);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        setIsLoaded(true);
+      }
+    };
+
+    fetchUserProfile();
+  }, [userId]);
+
+  return { userName, isLoaded };
+}
 
 // Hook for Missing Items
 export function useFirebaseMissingItems(userId: string = 'guest') {
@@ -216,11 +249,18 @@ export function useFirebaseExpenses(userId: string = 'guest') {
     return () => unsubscribe();
   }, [userId]);
 
-  const addExpense = async (description: string, amount: number, category: string, date: string) => {
+  const addExpense = async (
+    description: string,
+    amount: number,
+    category: string,
+    date: string,
+    paidBy: string
+  ) => {
     const newExpense = {
       description,
       amount,
       category: category || null,
+      paidBy: paidBy || 'Unknown',
       date,
       createdAt: Date.now(),
     };
@@ -233,4 +273,37 @@ export function useFirebaseExpenses(userId: string = 'guest') {
   };
 
   return { expenses, isLoaded, addExpense, deleteExpense };
+}
+
+// Hook for Payers (people who can pay expenses)
+export function useFirebasePayers(userId: string = 'guest') {
+  const [payers, setPayers] = useState<Payer[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const q = query(
+      collection(db, `users/${userId}/payers`),
+      orderBy('createdAt', 'desc')
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as Payer[];
+      setPayers(data);
+      setIsLoaded(true);
+    });
+
+    return () => unsubscribe();
+  }, [userId]);
+
+  const addPayer = async (name: string) => {
+    const trimmed = name.trim();
+    if (!trimmed) return null;
+    const existing = payers.find((p) => p.name.toLowerCase() === trimmed.toLowerCase());
+    if (existing) return existing;
+    const newPayer = { name: trimmed, createdAt: Date.now() };
+    const docRef = await addDoc(collection(db, `users/${userId}/payers`), newPayer);
+    return { id: docRef.id, ...newPayer } as Payer;
+  };
+
+  return { payers, isLoaded, addPayer };
 }
